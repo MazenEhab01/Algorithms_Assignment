@@ -292,3 +292,175 @@ public:
         delete[] array;
     }
 };
+
+class PriorityQueue
+{
+    maxHeap maxPQ;
+
+public:
+    void insert(int element)
+    {
+        maxPQ.insertElement(element);
+    }
+
+    int extractMax()
+    {
+        if (maxPQ.isEmpty())
+        {
+            throw runtime_error("Priority Queue is empty");
+        }
+        int maxElement = maxPQ.peek();
+        maxPQ.removeMax();
+        return maxElement;
+    }
+
+    int maximum()
+    {
+        if (maxPQ.isEmpty())
+        {
+            throw runtime_error("Priority Queue is empty");
+        }
+        return maxPQ.peek();
+    }
+
+
+
+    void removeMax()
+    {
+        if (maxPQ.isEmpty())
+        {
+            throw runtime_error("Priority Queue is empty");
+        }
+        maxPQ.removeMax();
+    }
+
+
+    bool isEmpty()
+    {
+        return maxPQ.isEmpty();
+    }
+
+
+    void display()
+    {
+        cout << "Priority Queue : ";
+        maxPQ.display();
+    }
+};
+
+
+void heapSort(int arr[], int n)
+{
+    maxHeap heap;
+
+    for (int i = 0; i < n; i++)
+    {
+        heap.insertElement(arr[i]);
+    }
+
+    for (int i = n - 1; i >= 0; i--)
+    {
+        arr[i] = heap.peek();
+        heap.removeMax();
+    }
+}
+
+
+
+
+void printArray(int arr[], int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+}
+
+#include <iostream>
+using namespace std;
+
+
+int main()
+{
+    // Part 1: Demonstrate Heap Operations (Using maxHeap and minHeap)
+    cout << "=== Max Heap Demonstration ===" << endl;
+
+    // Max Heap Demo
+    maxHeap maxH;
+    maxH.insertElement(15);
+    maxH.insertElement(10);
+    maxH.insertElement(25);
+    maxH.insertElement(5);
+    cout << "Max Heap Elements: ";
+    maxH.display();
+
+    cout << "Peek (Max): " << maxH.peek() << endl;
+    cout << "Heap Length: " << maxH.length() << endl;
+    cout << "Is Heap Empty? " << (maxH.isEmpty() ? "Yes" : "No") << endl;
+
+    maxH.removeMax();
+    cout << "After removing max element: ";
+    maxH.display();
+
+    cout << "Element at index 1: " << maxH.getValue(1) << endl;
+
+    cout << "\n=== Min Heap Demonstration ===" << endl;
+
+    // Min Heap Demo
+    minHeap minH;
+    minH.insertElement(15);
+    minH.insertElement(10);
+    minH.insertElement(25);
+    minH.insertElement(5);
+    cout << "Min Heap Elements: ";
+    minH.display();
+
+    cout << "Peek (Min): " << minH.peek() << endl;
+    cout << "Heap Length: " << minH.length() << endl;
+    cout << "Is Heap Empty? " << (minH.isEmpty() ? "Yes" : "No") << endl;
+
+    minH.removeMin();
+    cout << "After removing min element: ";
+    minH.display();
+
+    cout << "Element at index 1: " << minH.getValue(1) << endl;
+
+    cout << "\n=== Priority Queue Demonstration ===" << endl;
+
+    // Part 2: Demonstrate Priority Queue using Max Heap
+    PriorityQueue pq;
+    pq.insert(50);
+    pq.insert(20);
+    pq.insert(30);
+    pq.insert(60);
+    cout << "Priority Queue Elements: ";
+    pq.display();
+
+    cout << "Current Maximum: " << pq.maximum() << endl;
+    cout << "Is Priority Queue Empty? " << (pq.isEmpty() ? "Yes" : "No") << endl;
+
+    cout << "Extract Max (Highest Priority): " << pq.extractMax() << endl;
+    cout << "After extracting max: ";
+    pq.display();
+
+    pq.removeMax();
+    cout << "After removing another max element: ";
+    pq.display();
+
+    cout << "\n=== Heap Sort Demonstration ===" << endl;
+
+    // Part 3: Demonstrate Heap Sort
+    int arr[] = { 15, 3, 17, 10, 84, 19, 6, 22, 9 };
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    cout << "Original Array: ";
+    printArray(arr, n);
+
+    heapSort(arr, n);
+
+    cout << "Sorted Array using Heap Sort: ";
+    printArray(arr, n);
+
+    return 0;
+}
